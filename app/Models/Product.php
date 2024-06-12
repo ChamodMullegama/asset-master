@@ -20,7 +20,7 @@ class Product extends Model
         'status',
     ];
 
-    const status = [
+    const STATUS = [
         'unavailable' => 0,
         'available' => 1,
     ];
@@ -28,20 +28,15 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class);
     }
-
-    public function getStatusStringAttribute()
+    
+    public function scopeAvailable()
     {
-        return array_search($this->status, self::status);
+        return $this->where('status', self::STATUS['available']);
+      
     }
 
-    public function scopeAvailable($query)
+    public function scopeUnavailable()
     {
-        return $query->where('status', self::status['available']);
+        return $this->where('status', self::STATUS['unavailable']);
     }
-
-    public function scopeUnavailable($query)
-    {
-        return $query->where('status', self::status['unavailable']);
-    }
-
 }

@@ -22,4 +22,20 @@ class ProductImage extends Model
     {
         return $this->hasOne(Image::class, 'id', 'image_id');
     }
+    
+    const IS_PRIMARY = [
+        'secondary' => 0,
+        'is_primary' => 1,
+    ];
+
+    public function scopeAvailable()
+    {
+        return $this->where('status', self::IS_PRIMARY['secondary']);
+      
+    }
+
+    public function scopeUnavailable()
+    {
+        return $this->where('status', self::IS_PRIMARY['is_primary']);
+    }
 }

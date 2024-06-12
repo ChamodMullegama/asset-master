@@ -15,23 +15,19 @@ class Type extends Model
         'status',
     ];
 
-    const status = [
+    const STATUS = [
         'unavailable' => 0,
         'available' => 1,
     ];
 
-    public function getStatusStringAttribute()
+    public function scopeAvailable()
     {
-        return array_search($this->status, self::status);
+        return $this->where('status', self::STATUS['available']);
+      
     }
 
-    public function scopeAvailable($query)
+    public function scopeUnavailable()
     {
-        return $query->where('status', self::status['available']);
-    }
-
-    public function scopeUnavailable($query)
-    {
-        return $query->where('status', self::status['unavailable']);
+        return $this->where('status', self::STATUS['unavailable']);
     }
 }
